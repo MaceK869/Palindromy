@@ -1,0 +1,93 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+
+bool isPalindrome(string s)
+{
+        int back = s.length()-1; //ostatnia litera s
+        bool palindrome = true; //zakładamy że jest
+        for (int i=0; i<s.length()/2 && palindrome; i++) //tylko do połowy stringu
+                if (s[i] != s[back--]) //back po podstawieniu zmniejszy się o 1 z ostatniej na przedostatnią itd.
+                        palindrome = false;
+                       
+        return palindrome;
+}
+
+class zamiana{
+       ifstream plik1;
+       ofstream plik2;
+
+  public:
+        zamiana();
+        ~zamiana();
+       
+        void licz();        
+};
+
+
+
+
+
+
+
+
+
+
+zamiana::zamiana(){ //konstruktor otwiera pliki
+    plik1.open("c:\\1.txt");
+    plik2.open("c:\\2.txt");
+}
+
+void zamiana::licz(){
+    int licznik; //ilość wystąpień znaku
+    string napis; //wczytany napis z pliku
+    char znak; //wczytany znak z pliku
+
+    while(!plik1.eof()){ //czyta plik linia po linii
+        plik1 >> znak >> napis; //czyta kolejno znak i napis z pliku
+        licznik = 0; //licznik powtórzeń znaku
+ 
+        for(int i = 0; i<napis.length(); i++){ //liczy wystąpienia znaku
+            if(napis[i] == znak)
+                licznik++;
+            napis[i] -= 32; //wg ASCII aby zmienić na wielką literę wystarczy odjąć od znaku (char) 32.            
+        }
+       
+        znak -= 32; //znak też na wielką literę
+        plik2 << napis << " " << licznik << "x" << znak << endl; //zapis wyniku dla 1 linii        
+    }
+    
+    
+     
+}
+
+zamiana::~zamiana(){ //destruktor - niejawnie wywołany przy zamknięciu main(), zamyka pliki
+    plik1.close();
+    plik2.close();
+}
+
+int main() {
+    zamiana z1; //tworzymy obiekt klasy zamiana - tu uruchamia się konstruktor
+    z1.licz(); //wywołujemy metodę, główną pętlę
+    
+	
+	cout<<"Podaj liczbę:";
+	cin>> licznik;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	return 0;
+} //tu uruchamia się niejawnie destruktor
